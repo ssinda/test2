@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.study.spring.mapper.memberMapper">
+	
+	<select id="getNow" resultType="String">
+		select now()
+	</select>
+	
+	<insert id="insertMember">
+		insert into member (user_id, pw, user_name, email)
+		values(#{user_id}, #{pw}, #{user_name}, #{email})
+	</insert>
+
+	<update id="update">
+		update member
+		<!-- trim prefix="SET" suffixOverrides=",">
+		</trim-->
+		<set>
+			<if test="user_name != null">
+				user_name = #{user_name},
+			</if>
+			<if test="pw != null">
+				pw = #{pw},
+			</if>
+			<if test="email != null">
+				email = #{email}
+			</if>
+		</set>
+		where user_id = #{user_id}
+	</update>
+	
+	<delete id="delete">
+		delete from member where user_id = #{user_id}
+	</delete>
+
+	<select id="get" resultType="com.study.spring.domain.MemberVO">
+		select * from member where user_id = #{user_id}
+	</select>
+	
+	<select id="getList" resultType="com.study.spring.domain.MemberVO">
+		select * from member
+	</select>
+</mapper>
